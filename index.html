@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adel Al-Ashmori | 3D Portfolio</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================= المتغيرات والألوان ================= */
+        :root {
+            --bg-color: #081b29;
+            --main-color: #00abf0;
+            --text-color: #ededed;
+            --second-text-color: #b0bec5;
+            --white-color: #fff;
+            --cover-color: #0c273d;
+            --pages-color: #112e42;
+            --border: .125rem solid #00abf0;
+            --box-shadow: 0 0 .6rem rgba(0, 171, 240, 0.2);
+        }
+
+        /* ================= الإعدادات العامة ================= */
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Poppins', sans-serif; text-decoration: none; border: none; outline: none;
+        }
+
+        body {
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; background: var(--bg-color); color: var(--text-color); overflow: hidden;
+        }
+
+        /* ================= هندسة الكتاب والحركات ================= */
+        .wrapper {
+            position: relative; width: 66rem; height: 42rem; padding: 2rem;
+            perspective: 250rem;
+            animation: show-animate 2s forwards;
+        }
+
+        @keyframes show-animate {
+            0%, 30% { opacity: 0; transform: rotate(-20deg); }
+            100% { opacity: 1; transform: rotate(0deg); }
+        }
+
+        .book {
+            position: relative; width: 100%; height: 100%; display: flex;
+            transform-style: preserve-3d;
+            /* الكتاب مغلق ومزاح لليمين ليبدو في المنتصف */
+            transform: translateX(16.5rem); 
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        /* كلاس يضاف بالجافاسكربت عند فتح الغلاف ليتوسط الكتاب الشاشة */
+        .book.open {
+            transform: translateX(0);
+        }
+
+        .book-page {
+            position: absolute; width: 50%; height: 100%; right: 0;
+            transform-style: preserve-3d; transform-origin: left;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        /* كلاس تقليب الصفحة */
+        .book-page.turn { transform: rotateY(-180deg); }
+
+        .page-front, .page-back {
+            position: absolute; width: 100%; height: 100%;
+            background: var(--pages-color); padding: 2.5rem;
+            backface-visibility: hidden; /* إخفاء الظهر عند الدوران */
+            border-radius: 0 1rem 1rem 0; box-shadow: inset 1.5rem 0 3rem rgba(0,0,0,0.3);
+        }
+
+        .page-back {
+            background: var(--pages-color); transform: rotateY(180deg);
+            border-radius: 1rem 0 0 1rem; box-shadow: inset -1.5rem 0 3rem rgba(0,0,0,0.3);
+        }
+
+        /* ================= تصميم الغلاف ================= */
+        .cover {
+            background: var(--cover-color); box-shadow: var(--box-shadow);
+            border: var(--border); border-radius: 0 1rem 1rem 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+
+        .cover h1 { font-size: 3.5rem; color: var(--main-color); line-height: 1.2; text-shadow: 0 0 10px rgba(0,171,240,0.5); }
+        .cover h3 { font-size: 1.5rem; color: var(--text-color); font-weight: 500; margin-top: 1rem; }
+        .cover p { font-size: 1.1rem; color: var(--second-text-color); margin-top: 2rem; }
+        .cover .open-btn { margin-top: 3rem; cursor: pointer; color: var(--main-color); font-size: 1.2rem; animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; text-shadow: 0 0 15px var(--main-color); }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        /* ================= تصميم البروفايل (اليسار عند الفتح) ================= */
+        .profile-page { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        
+        .profile-page img {
+            width: 14rem; height: 14rem; border-radius: 50%; border: .25rem solid var(--main-color);
+            margin-bottom: 1.5rem; object-fit: cover; box-shadow: var(--box-shadow);
+        }
+
+        .profile-page h1 { font-size: 2.2rem; line-height: 1; }
+        .profile-page h3 { font-size: 1.3rem; color: var(--main-color); margin: .5rem 0 1.5rem; font-weight: 500; }
+        .profile-page p { text-align: center; color: var(--second-text-color); font-size: .95rem; margin-bottom: 2rem; line-height: 1.6; }
+
+        .social-media { margin-bottom: 2rem; }
+        .social-media a {
+            display: inline-flex; justify-content: center; align-items: center;
+            width: 2.8rem; height: 2.8rem; background: transparent; border: var(--border);
+            border-radius: 50%; font-size: 1.4rem; color: var(--main-color);
+            margin: 0 .5rem; transition: .3s;
+        }
+        .social-media a:hover { background: var(--main-color); color: var(--bg-color); box-shadow: var(--box-shadow); transform: translateY(-3px); }
+
+        .btn {
+            display: inline-flex; justify-content: center; align-items: center; width: 10rem; height: 3rem;
+            background: var(--main-color); border: var(--border); border-radius: .5rem;
+            font-size: 1.1rem; color: var(--bg-color); font-weight: 600; transition: .3s; cursor: pointer;
+        }
+        .btn:hover { background: transparent; color: var(--main-color); box-shadow: var(--box-shadow); }
+
+        /* ================= العناوين والمحتوى الداخلي ================= */
+        .title { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: var(--main-color); border-bottom: 1px solid rgba(0, 171, 240, 0.3); padding-bottom: 10px; }
+
+        .content-box { margin-bottom: 1.5rem; border-left: 2px solid var(--main-color); padding-left: 1rem; }
+        .content-box h4 { font-size: 1.2rem; color: var(--white-color); }
+        .content-box h5 { font-size: 1rem; color: var(--second-text-color); font-weight: 400; margin-bottom: .5rem; }
+        .content-box p { font-size: .95rem; color: var(--second-text-color); line-height: 1.5; }
+
+        /* أشرطة المهارات (Progress Bars) */
+        .skills-box { margin-bottom: 1.5rem; }
+        .skills-box h4 { font-size: 1.1rem; color: var(--white-color); margin-bottom: .5rem; display: flex; justify-content: space-between; }
+        .skills-box h4 span { color: var(--main-color); font-size: .9rem; }
+        .progress-bar { width: 100%; height: .6rem; background: var(--bg-color); border-radius: .5rem; overflow: hidden; border: 1px solid rgba(0, 171, 240, 0.2); }
+        .progress-bar span { display: block; height: 100%; background: var(--main-color); box-shadow: var(--box-shadow); }
+
+        /* فورم التواصل */
+        .contact-box .input-box { display: flex; flex-wrap: wrap; justify-content: space-between; }
+        .contact-box .input-box input, .contact-box textarea {
+            width: 100%; padding: 1rem; background: var(--bg-color); border: var(--border);
+            border-radius: .5rem; color: var(--text-color); font-size: 1rem; margin-bottom: 1rem; outline: none;
+        }
+        .contact-box .input-box input.half { width: 48%; }
+        .contact-box textarea { resize: none; height: 8rem; }
+
+        /* أزرار التقليب السفلية */
+        .nextprev-btn {
+            position: absolute; bottom: 2rem; right: 2rem; width: 2.5rem; height: 2.5rem;
+            cursor: pointer; font-size: 2.5rem; color: var(--second-text-color); display: inline-flex;
+            justify-content: center; align-items: center; transition: .3s; background: transparent;
+        }
+        .nextprev-btn:hover { color: var(--main-color); transform: scale(1.1); }
+        .nextprev-btn.back { right: auto; left: 2rem; }
+        .page-num { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); font-size: .9rem; color: var(--second-text-color); }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="book" id="book">
+            
+            <div class="book-page" id="page-1" style="z-index: 3;">
+                
+                <div class="page-front cover">
+                    <h1>Ausan<br>Engineering</h1>
+                    <h3>Interactive Portfolio</h3>
+                    <p>Adel Amin Al-Ashmori</p>
+                    <div class="open-btn" onclick="turnPage(1)"><i class='bx bx-pointer'></i> Click To Open</div>
+                </div>
+
+                <div class="page-back profile-page">
+                    <img src="profile.jpg" alt="Adel Al-Ashmori"> 
+                    <h1>Adel Al-Ashmori</h1>
+                    <h3>IT & Full-Stack Engineer</h3>
+                    <p>20-year-old 3rd-year Information Technology student. Cisco-certified Network Engineer specializing in building robust architectures and highly interactive web experiences.</p>
+                    
+                    <div class="social-media">
+                        <a href="#"><i class='bx bxl-linkedin'></i></a>
+                        <a href="#"><i class='bx bxl-github'></i></a>
+                        <a href="#"><i class='bx bxl-whatsapp'></i></a>
+                    </div>
+                    <a href="#" class="btn">Download CV</a>
+                </div>
+            </div>
+
+            <div class="book-page" id="page-2" style="z-index: 2;">
+                
+                <div class="page-front">
+                    <h2 class="title">My Experience</h2>
+                    
+                    <div class="content-box">
+                        <h4>Full-Stack Web Developer</h4>
+                        <h5>Ausan Engineering Office | 2026</h5>
+                        <p>Architected and developed a dark-cinematic portfolio utilizing HTML, CSS, JavaScript, and GSAP animations for advanced UI interactions.</p>
+                    </div>
+
+                    <div class="content-box">
+                        <h4>Software Developer</h4>
+                        <h5>Smart POS System | 2025</h5>
+                        <p>Engineered a touch-screen point-of-sale and dining system utilizing C# and Visual Studio 2019 to enhance order efficiency.</p>
+                    </div>
+
+                    <div class="content-box" style="border-left-color: transparent;">
+                        <h4><i class='bx bxs-graduation' style="color: var(--main-color); margin-right: 5px;"></i> Education</h4>
+                        <p>3rd Year IT College Student.<br>Cisco Certified Network Engineer.<br>TOEFL iBT English Certification.</p>
+                    </div>
+
+                    <span class="page-num">1</span>
+                    <button class="nextprev-btn" onclick="turnPage(2)"><i class='bx bx-chevron-right'></i></button>
+                </div>
+
+                <div class="page-back">
+                    <h2 class="title">My Skills</h2>
+
+                    <div class="skills-box">
+                        <h4>HTML & CSS <span>95%</span></h4>
+                        <div class="progress-bar"><span style="width: 95%;"></span></div>
+                    </div>
+                    <div class="skills-box">
+                        <h4>JavaScript (ES6) & GSAP <span>85%</span></h4>
+                        <div class="progress-bar"><span style="width: 85%;"></span></div>
+                    </div>
+                    <div class="skills-box">
+                        <h4>C# & .NET <span>80%</span></h4>
+                        <div class="progress-bar"><span style="width: 80%;"></span></div>
+                    </div>
+                    <div class="skills-box">
+                        <h4>Cisco Networking <span>90%</span></h4>
+                        <div class="progress-bar"><span style="width: 90%;"></span></div>
+                    </div>
+
+                    <span class="page-num">2</span>
+                    <button class="nextprev-btn back" onclick="turnBack(2)"><i class='bx bx-chevron-left'></i></button>
+                </div>
+            </div>
+
+            <div class="book-page" id="page-3" style="z-index: 1;">
+                
+                <div class="page-front">
+                    <h2 class="title">Last Projects</h2>
+                    
+                    <div class="content-box">
+                        <h4 style="color: var(--main-color);"><i class='bx bx-laptop'></i> Ausan Portfolio</h4>
+                        <p style="margin-top: 5px;">A premium Cyberpunk/Tech-themed web interface showcasing high-end architectural contracts. Features 3D layout, dark mode, and smooth transitions.</p>
+                    </div>
+
+                    <div class="content-box">
+                        <h4 style="color: var(--main-color);"><i class='bx bx-restaurant'></i> Restaurant POS</h4>
+                        <p style="margin-top: 5px;">A comprehensive C# desktop application built for restaurant self-service and management, focusing on rapid data processing and user experience.</p>
+                    </div>
+
+                    <span class="page-num">3</span>
+                    <button class="nextprev-btn" onclick="turnPage(3)"><i class='bx bx-chevron-right'></i></button>
+                </div>
+
+                <div class="page-back">
+                    <h2 class="title">Contact Me</h2>
+
+                    <form class="contact-box" onsubmit="event.preventDefault();">
+                        <div class="input-box">
+                            <input type="text" placeholder="Full Name" class="half" required>
+                            <input type="email" placeholder="Email Address" class="half" required>
+                        </div>
+                        <textarea placeholder="Your Message" required></textarea>
+                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                    </form>
+
+                    <button class="btn" style="margin-top: 2rem; background: transparent; color: var(--main-color);" onclick="closeBook()">Close Book</button>
+
+                    <span class="page-num">4</span>
+                    <button class="nextprev-btn back" onclick="turnBack(3)"><i class='bx bx-chevron-left'></i></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const book = document.getElementById('book');
+        const pages = document.querySelectorAll('.book-page');
+        const totalPages = pages.length;
+
+        // دالة لضبط طبقات Z-Index بذكاء لتجنب تداخل الصفحات أثناء وبعد التقليب
+        function updateZIndex() {
+            pages.forEach((page, index) => {
+                if (page.classList.contains('turn')) {
+                    // الصفحات المقلوبة (اليسار): الرقم الأكبر يأخذ طبقة أعلى
+                    page.style.zIndex = index + 1;
+                } else {
+                    // الصفحات غير المقلوبة (اليمين): الرقم الأصغر يأخذ طبقة أعلى
+                    page.style.zIndex = totalPages - index;
+                }
+            });
+        }
+
+        // دالة فتح الصفحة (الذهاب للأمام)
+        function turnPage(pageId) {
+            const page = document.getElementById(`page-${pageId}`);
+            if (!page) return;
+
+            // عند فتح الغلاف (الصفحة 1)، قم بتوسيط الكتاب في الشاشة
+            if (pageId === 1) {
+                book.classList.add('open');
+            }
+
+            // رفع الطبقة أثناء الطيران لتمر فوق الجميع
+            page.style.zIndex = 20;
+            page.classList.add('turn');
+
+            // بعد انتهاء الأنيميشن (1 ثانية)، رتب الطبقات بشكل صحيح
+            setTimeout(updateZIndex, 500);
+        }
+
+        // دالة إغلاق الصفحة (العودة للخلف)
+        function turnBack(pageId) {
+            const page = document.getElementById(`page-${pageId}`);
+            if (!page) return;
+
+            // عند إغلاق الغلاف (الصفحة 1)، أعد الكتاب لليمين قليلاً
+            if (pageId === 1) {
+                book.classList.remove('open');
+            }
+
+            // رفع الطبقة أثناء الطيران
+            page.style.zIndex = 20;
+            page.classList.remove('turn');
+
+            setTimeout(updateZIndex, 500);
+        }
+
+        // دالة لإغلاق الكتاب بالكامل بضغطة زر واحدة من آخر صفحة
+        function closeBook() {
+            // نقوم بإزالة كلاس turn من جميع الصفحات تنازلياً
+            for (let i = totalPages; i >= 1; i--) {
+                const page = document.getElementById(`page-${i}`);
+                if (page && page.classList.contains('turn')) {
+                    setTimeout(() => {
+                        page.style.zIndex = 20;
+                        page.classList.remove('turn');
+                        if (i === 1) book.classList.remove('open');
+                    }, (totalPages - i) * 200); // تأخير بسيط لتعطي تأثير إغلاق متتابع وجميل
+                }
+            }
+            setTimeout(updateZIndex, totalPages * 200 + 500);
+        }
+    </script>
+</body>
+</html>

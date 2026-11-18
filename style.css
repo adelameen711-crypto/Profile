@@ -1,0 +1,198 @@
+/* style.css - الكود الكامل والنهائي المجهز لـ index.html الخاص بك */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f4f0; /* خلفية الموقع فاتحة وملكيه */
+    color: #2c3e50; /* نصوص داكنة */
+    overflow: hidden;
+}
+
+/* ================= هيكل الكتاب ثلاثي الأبعاد ================= */
+.book-container {
+    perspective: 2000px;
+}
+
+.book {
+    position: relative;
+    width: 450px;
+    height: 585px;
+    transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.book-page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* الصفحات التي تقلب */
+.book-page.turn {
+    transform: rotateY(-180deg);
+}
+
+.page-front, .page-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 45px;
+    backface-visibility: hidden;
+}
+
+.page-front {
+    background: #ffffff;
+    border-radius: 0 14px 14px 0;
+    box-shadow: inset 20px 0 35px rgba(0, 0, 0, 0.05), 5px 10px 25px rgba(0,0,0,0.06);
+}
+
+.page-back {
+    background: #faf9f5;
+    border-radius: 14px 0 0 14px;
+    box-shadow: inset -20px 0 35px rgba(0, 0, 0, 0.07), -5px 10px 25px rgba(0,0,0,0.06);
+    transform: rotateY(180deg);
+}
+
+/* ================= تصميم الأغلفة الذهبية الفخمة ================= */
+.cover-front, .cover-back {
+    background: linear-gradient(135deg, #fdfcf9 0%, #eae6dc 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    /* إطار ذهبي ملكي مزدوج للكفر */
+    outline: 2px solid #d4af37;
+    outline-offset: -14px;
+    border: 1px solid #c5a059;
+}
+
+.cover-front { border-left: 14px solid #d4af37; cursor: pointer; border-radius: 0 14px 14px 0; }
+.cover-back { border-right: 14px solid #d4af37; border-radius: 14px 0 0 14px; cursor: default; }
+
+.cover-content { text-align: center; width: 100%; padding: 0 30px; }
+.icon-cover { font-size: 80px; color: #d4af37; margin-bottom: 15px; }
+
+.cover-content h1 { font-size: 54px; color: #aa841c; font-weight: 800; letter-spacing: 5px; }
+.cover-author { color: #576574; font-size: 16px; margin-top: 10px; font-weight: 500; }
+.click-info { display: block; margin-top: 50px; color: #aa841c; font-size: 13px; font-weight: 600; animation: bouncePulse 2s infinite; }
+
+@keyframes bouncePulse {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-5px); opacity: 0.5; }
+}
+
+/* ================= تنسيق العناوين والمكونات الداخلية ================= */
+.title {
+    color: #aa841c; margin-bottom: 25px; font-size: 22px;
+    border-bottom: 2px solid #f1eccf; padding-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 1px;
+}
+
+.box-item { margin-bottom: 20px; }
+.box-item h4 {
+    font-size: 16px; color: #2c3e50; font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+}
+/* النقاط المضيئة الذهبية */
+.box-item h4::before {
+    content: ''; display: block; width: 8px; height: 8px;
+    background-color: #d4af37; border-radius: 50%; box-shadow: 0 0 8px #d4af37;
+}
+
+.box-item h5 { color: #aa841c; font-size: 13px; margin: 4px 0 4px 18px; font-weight: 500; }
+.box-item p { font-size: 13px; color: #576574; line-height: 1.6; margin-left: 18px; }
+
+/* ================= كرت البروفايل والأيقونات ================= */
+.profile-page { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.profile-page img {
+    width: 110px; height: 110px; border-radius: 50%;
+    border: 3px solid #d4af37; margin-bottom: 12px;
+    object-fit: cover; box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+}
+.profile-page h1 { font-size: 22px; font-weight: 700; color: #2c3e50; }
+.profile-page h3 { color: #aa841c; font-size: 14.5px; margin-bottom: 12px; font-weight: 500; }
+.profile-desc { font-size: 13px; color: #576574; line-height: 1.6; margin-bottom: 18px; padding: 0 10px; }
+
+.social-media { margin-bottom: 18px; }
+.social-media a {
+    display: inline-flex; width: 36px; height: 36px;
+    border: 1.5px solid #d4af37; border-radius: 50%;
+    font-size: 18px; color: #aa841c; text-decoration: none;
+    margin: 0 5px; transition: 0.3s;
+}
+.social-media a:hover { background: #d4af37; color: #fff; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4); transform: translateY(-2px); }
+
+/* المهارات كشارات ذهبية */
+.skills-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 0 18px; }
+.skill-badge {
+    background: #fdfbf7; padding: 5px 12px; border-radius: 6px;
+    font-size: 11.5px; color: #aa841c; border: 1px solid #f1eccf; font-weight: 500;
+}
+
+/* ================= الفورم والأزرار الفاخرة ================= */
+.contact-form { display: flex; flex-direction: column; gap: 12px; }
+.input-box input, .input-box textarea {
+    width: 100%; padding: 10px 12px; background: #ffffff;
+    border: 1px solid #d1cbd4; border-radius: 6px;
+    color: #2c3e50; font-size: 13px; outline: none; transition: 0.3s;
+}
+.input-box input:focus, .input-box textarea:focus { border-color: #aa841c; }
+
+.btn {
+    padding: 10px 22px; background: #d4af37; border: 2px solid #d4af37;
+    border-radius: 6px; color: #ffffff; font-size: 13px; font-weight: 600;
+    text-decoration: none; transition: 0.3s; cursor: pointer; display: inline-block;
+}
+.btn:hover { background: transparent; color: #aa841c; }
+.btn.contact-me-btn { background: transparent; color: #aa841c; border-color: transparent; font-weight: 500; }
+.submit-btn { width: 100%; margin-top: 4px; }
+
+.book-page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform-style: preserve-3d;
+}
+
+/* حركة الطي للأمام */
+.book-page.turn {
+    transform: rotateY(-180deg);
+}
+
+/* زر الإغلاق النهائي الموجود في الغلاف الخلفي */
+.close-book-final-btn { position: absolute; bottom: 45px; left: 50%; transform: translateX(-50%); padding: 10px 25px; }
+
+/* ================= أزرار التنقل والترقيم الحركي ================= */
+.next-btn, .back-btn {
+    position: absolute; bottom: 22px; background: transparent; border: none;
+    color: #aa841c; font-size: 32px; cursor: pointer; transition: 0.3s ease;
+}
+.next-btn { right: 35px; } .back-btn { left: 35px; }
+.next-btn:hover { transform: translateX(5px); color: #2c3e50; }
+.back-btn:hover { transform: translateX(-5px); color: #2c3e50; }
+
+.page-number {
+    position: absolute; bottom: 28px; left: 50%;
+    transform: translateX(-50%); font-size: 12px;
+    color: #a4b0be; font-weight: 600;
+}
